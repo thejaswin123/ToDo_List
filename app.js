@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const _ = require("lodash");
+require('dotenv').config()
 
 const app = express();
 app.use(bodyParser.urlencoded({extended: true}));
@@ -9,7 +10,7 @@ app.set("view engine","ejs");
 app.use(express.static("public"));
 
 mongoose.set('strictQuery', true);
-mongoose.connect("mongodb://127.0.0.1:27017/todolistDB",{useNewUrlParser: true});
+mongoose.connect("mongodb+srv://admin-thejaswin:"+process.env.MONGODB_PASSWD+"@cluster0.houzjiq.mongodb.net/todolistDB",{useNewUrlParser: true});
 
 const itemsSchema = {
     name:String
@@ -132,6 +133,6 @@ app.post("/delete",function(req,res){
 // });
 
 
-app.listen(3000,function(){
+app.listen(process.env.port||3000,function(){
     console.log("server is running on port 3000")
 });
